@@ -1,0 +1,69 @@
+<html>
+    <title>
+        covid 19 Api in js
+    </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <body>
+        <div class="container">
+            <h1 class="text-center mt-5">Covid 19 Live Data in table</h1>
+            <br><br>
+            <table class="table table-hover" >
+                <thead>
+                <tr>
+                    <th>New Confrimed</th>
+                    <th>Total Cases</th>
+                    <th>New Deaths</th>
+                    <th>Total Deaths</th>
+                    <th>Total Recovery</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr id="data">
+
+                    </tr>
+                </tbody>
+
+            </table>
+            <br>
+            <button onclick="refreshData()" class ="btn btn-danger btn-block">
+                    Refresh Data
+            </button>
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // $(document).ready(function(){
+            init()
+
+            function init(){
+                var url = "https://api.covid19api.com/summary"
+
+                var data = ''
+
+                $.get(url,function(data){
+                    console.log(data.Global)
+
+                    data = `
+                    <td>${data.Global.NewConfirmed}</td>
+                    <td> ${ data.Global.TotalConfirmed}</td>
+                    <td>${data.Global.NewDeaths}</td>
+                   <td>${data.Global.TotalDeaths}</td>
+                   <td>${data.Global.TotalRecovered}</td>
+                    `
+
+                    $("#data").html(data)
+
+
+                })
+            }
+            function refreshData(){
+                clearData()
+                init()
+            }
+            function clearData(){
+                $("#data").empty()
+               
+            }
+    
+    </script>
+</html>
